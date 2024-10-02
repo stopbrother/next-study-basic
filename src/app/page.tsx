@@ -1,12 +1,11 @@
-import Link from "next/link";
+import TodoList from "@/components/todos/TodoList";
 import React from "react";
 
 const RootPage = () => {
   return (
-    <div>
-      Rootpage
-      <Link href="/todo/1">detail</Link>
-    </div>
+    <main>
+      <TodoList />
+    </main>
   );
 };
 

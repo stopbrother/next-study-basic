@@ -1,3 +1,4 @@
+import { getTodoDetail } from "@/api/todo.api";
 import React from "react";
 
 interface TodoDetailPageProps {
@@ -6,10 +7,15 @@ interface TodoDetailPageProps {
   };
 }
 
-const TodoDetailPage = ({ params }: TodoDetailPageProps) => {
+const TodoDetailPage = async ({ params }: TodoDetailPageProps) => {
   const id = params.id;
+  const { content, completed } = await getTodoDetail(id);
 
-  return <div>Detailpage: {id}</div>;
+  return (
+    <div>
+      TodoDetailPage {content} - {completed ? "완료됨" : "미완료"}
+    </div>
+  );
 };
 
 export default TodoDetailPage;
