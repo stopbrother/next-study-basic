@@ -3,7 +3,7 @@ import React from "react";
 
 interface TodoDetailPageProps {
   params: {
-    id: string;
+    id: number;
   };
 }
 
