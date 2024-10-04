@@ -14,8 +14,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Sparta Basic Todo",
-  description: "Basic Todo",
+  title: "Sparta Basic Todos",
+  description: "A basic todo app built with Sparta",
 };
 
 export default function RootLayout({

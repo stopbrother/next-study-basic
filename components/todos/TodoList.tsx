@@ -1,15 +1,16 @@
-import { getTodos } from "@/api/todo.api";
+import { getTodos } from "@/api/todo-api";
 import Link from "next/link";
 
 const TodoList = async () => {
   const todos = await getTodos();
+  console.log("todos", todos);
 
   return (
     <ul>
-      {todos.map(({ id, content, completed }) => (
+      {todos.map(({ id, completed, text }) => (
         <li key={id}>
           <Link href={`/todo/${id}`}>
-            {content} - {completed ? "완료됨" : "미완료"}
+            {text} - {completed ? "완료됨" : "미완료"}
           </Link>
         </li>
       ))}
