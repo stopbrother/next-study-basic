@@ -3,7 +3,6 @@ import Link from "next/link";
 
 const TodoList = async () => {
   const todos = await getTodos();
-  console.log("todos", todos);
 
   return (
     <ul>
