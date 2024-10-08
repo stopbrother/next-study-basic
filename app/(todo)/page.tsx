@@ -1,4 +1,5 @@
 import { getTodos } from "@/api/todo-api";
+import TodoController from "@/components/todos/TodoController";
 import TodoForm from "@/components/todos/TodoForm";
 import TodoList from "@/components/todos/TodoList";
 import { Separator } from "@/components/ui/separator";
@@ -12,8 +13,13 @@ const TodoPage = async () => {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ["todos"],
-    queryFn: getTodos,
+    queryKey: ["todos", "pending"],
+    queryFn: () => getTodos("pending"),
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ["todos", "completed"],
+    queryFn: () => getTodos("completed"),
   });
 
   return (
@@ -26,10 +32,10 @@ const TodoPage = async () => {
         <Separator />
 
         <div className="space-y-4">
-          < />
+          <TodoController />
           <TodoList />
         </div>
-          <TodoForm />
+        <TodoForm />
       </div>
     </HydrationBoundary>
   );
