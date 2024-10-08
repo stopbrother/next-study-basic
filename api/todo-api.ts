@@ -1,21 +1,23 @@
 import { Todo } from "@/types/todo.types";
 
-const todoURL = new URL("http://localhost:5000/todos");
-
 export const getTodos = async (filter?: "completed" | "pending") => {
+  const todoURL = new URL("http://localhost:3000/todos");
   if (filter === "completed") todoURL.searchParams.set("completed", "true");
   if (filter === "pending") todoURL.searchParams.set("pending", "false");
 
   const response = await fetch(todoURL.toString(), {
     cache: "no-store",
   });
+
+  if (!response.ok) throw new Error("TodoList를 불러오는데 실패했습니다.");
+
   const todos: Todo[] = await response.json();
 
   return todos;
 };
 
 export const getTodoDetail = async (id: string) => {
-  const response = await fetch(`${todoURL}/${id}`, {
+  const response = await fetch(`http://localhost:3000/todos/${id}`, {
     cache: "no-store",
   });
   const todo: Todo = await response.json();
@@ -24,7 +26,7 @@ export const getTodoDetail = async (id: string) => {
 };
 
 export const addTodo = async (text: string) => {
-  const response = await fetch(`${todoURL}`, {
+  const response = await fetch(`http://localhost:3000/todos`, {
     method: "POST",
     headers: {
       "Content-type": "application/json",
@@ -38,7 +40,7 @@ export const addTodo = async (text: string) => {
 };
 
 export const deleteTodo = async (id: string) => {
-  const response = await fetch(`${todoURL}/${id}`, {
+  const response = await fetch(`http://localhost:3000/todos/${id}`, {
     method: "DELETE",
   });
 
@@ -50,7 +52,7 @@ export const deleteTodo = async (id: string) => {
 };
 
 export const toggleTodo = async (id: string, completed: boolean) => {
-  const response = await fetch(`${todoURL}/${id}`, {
+  const response = await fetch(`http://localhost:3000/todos/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
