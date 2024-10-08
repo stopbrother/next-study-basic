@@ -25,8 +25,11 @@ const TodoPage = async () => {
 
         <Separator />
 
-        <TodoForm />
-        <TodoList />
+        <div className="space-y-4">
+          < />
+          <TodoList />
+        </div>
+          <TodoForm />
       </div>
     </HydrationBoundary>
   );
