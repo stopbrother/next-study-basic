@@ -1,3 +1,5 @@
+"use client";
+
 import { useTodoStore } from "@/store/useTodoStore";
 import React, { useId } from "react";
 import { Switch } from "../ui/switch";
