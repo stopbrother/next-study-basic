@@ -1,5 +1,5 @@
 import { getTodos } from "@/api/todo-api";
-import TodoForm from "@/components/TodoForm";
+import TodoForm from "@/components/todos/TodoForm";
 import TodoList from "@/components/todos/TodoList";
 import {
   dehydrate,

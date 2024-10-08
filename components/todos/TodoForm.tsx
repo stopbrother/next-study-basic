@@ -1,5 +1,7 @@
+"use client";
 import { addTodo } from "@/api/todo-api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import React from "react";
 
 const TodoForm = () => {

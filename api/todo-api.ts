@@ -31,3 +31,15 @@ export const addTodo = async (text: string) => {
 
   return todo;
 };
+
+export const deleteTodo = async (id: string) => {
+  const response = await fetch(`http://localhost:5000/todos/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) throw new Error("삭제에 실패했습니다.");
+
+  const todo: Todo = await response.json();
+
+  return todo;
+};

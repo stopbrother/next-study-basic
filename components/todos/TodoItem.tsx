@@ -1,20 +1,23 @@
-import { getTodoDetail } from "@/api/todo-api";
-import { useQuery } from "@tanstack/react-query";
+"use client";
+import { useDeleteTodoMutation } from "@/query/useTodoMutation";
+import { Todo } from "@/types/todo.types";
+import Link from "next/link";
+
 import React from "react";
 
 interface TodoItemProps {
-  id: string;
+  todo: Todo;
 }
 
-const TodoItem = ({ id }: TodoItemProps) => {
-  const { data: todo } = useQuery({
-    queryKey: ["todos", id],
-    queryFn: () => getTodoDetail(id),
-  });
+const TodoItem = ({ todo }: TodoItemProps) => {
+  const { mutate: deleteTodo } = useDeleteTodoMutation();
+
+  const { id, text, completed } = todo;
 
   return (
     <div>
-      {todo?.text} - {todo?.completed ? "완료됨" : "미완료"}
+      <Link href={`/todo/${id}`}>{text}</Link>-{completed ? "완료됨" : "미완료"}
+      <button onClick={() => deleteTodo(id)}>삭제</button>
     </div>
   );
 };
