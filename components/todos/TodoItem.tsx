@@ -1,5 +1,8 @@
 "use client";
-import { useDeleteTodoMutation } from "@/query/useTodoMutation";
+import {
+  useDeleteTodoMutation,
+  useToggleTodoMutation,
+} from "@/query/useTodoMutation";
 import { Todo } from "@/types/todo.types";
 import Link from "next/link";
 
@@ -11,6 +14,7 @@ interface TodoItemProps {
 
 const TodoItem = ({ todo }: TodoItemProps) => {
   const { mutate: deleteTodo } = useDeleteTodoMutation();
+  const { mutate: toggleTodo } = useToggleTodoMutation();
 
   const { id, text, completed } = todo;
 
@@ -18,6 +22,9 @@ const TodoItem = ({ todo }: TodoItemProps) => {
     <div>
       <Link href={`/todo/${id}`}>{text}</Link>-{completed ? "완료됨" : "미완료"}
       <button onClick={() => deleteTodo(id)}>삭제</button>
+      <button onClick={() => toggleTodo({ id, completed: !completed })}>
+        {completed ? "완료됨" : "미완료"}
+      </button>
     </div>
   );
 };
