@@ -1,35 +1,44 @@
 "use client";
-import {
-  useDeleteTodoMutation,
-  useToggleTodoMutation,
-} from "@/query/useTodoMutation";
+
+import { useToggleTodoMutation } from "@/query/useTodoMutation";
 import { Todo } from "@/types/todo.types";
 import Link from "next/link";
-
-import React from "react";
-import { Button } from "../ui/button";
+import { Checkbox } from "../ui/checkbox";
+import TodoDeleteButton from "./TodoDeleteButton";
 
 interface TodoItemProps {
   todo: Todo;
 }
 
 const TodoItem = ({ todo }: TodoItemProps) => {
-  const { mutate: deleteTodo } = useDeleteTodoMutation();
   const { mutate: toggleTodo } = useToggleTodoMutation();
 
-  const { id, text, completed } = todo;
+  const { id, completed, title } = todo;
 
   return (
     <div className="flex flex-row justify-between items-center rounded-2xl bg-[#f5f5f5] p-4 hover:bg-[#ebebeb]">
-      <Link className="hover:underline" href={`/todo/${id}`}>
-        {text}
-      </Link>
-      -{completed ? "완료됨" : "미완료"}
+      <div className="flex flex-row items-center gap-2">
+        <Checkbox
+          checked={completed}
+          onCheckedChange={(checked) =>
+            checked !== "indeterminate" &&
+            toggleTodo({
+              id,
+              completed: checked,
+            })
+          }
+        />
+
+        <Link
+          className="hover:underline dark:text-black"
+          href={`/todo/${todo.id}`}
+        >
+          {title}
+        </Link>
+      </div>
+
       <div className="flex flex-row gap-2">
-        <Button onClick={() => deleteTodo(id)}>삭제</Button>
-        <Button onClick={() => toggleTodo({ id, completed: !completed })}>
-          {completed ? "완료됨" : "미완료"}
-        </Button>
+        <TodoDeleteButton id={id} />
       </div>
     </div>
   );
