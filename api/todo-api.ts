@@ -1,8 +1,10 @@
+import { SupabaseDatabase, Todo } from "@/types/todo.types";
 import { createClient } from "@/utils/supabase/client";
 
-export const getTodos = async (filter?: "completed" | "pending") => {
-  const client = createClient();
-
+export const getTodos = async (
+  client: SupabaseDatabase,
+  filter?: "completed" | "pending"
+) => {
   const { data, error } = await client
     .from("todos")
     .select()
@@ -13,9 +15,10 @@ export const getTodos = async (filter?: "completed" | "pending") => {
   return data;
 };
 
-export const getTodoDetail = async (id: string) => {
-  const client = createClient();
-
+export const getTodoDetail = async (
+  client: SupabaseDatabase,
+  id: Todo["id"]
+) => {
   const { data, error } = await client
     .from("todos")
     .select()
@@ -35,7 +38,7 @@ export const addTodo = async (title: string) => {
   if (error) throw Error(error.message);
 };
 
-export const deleteTodo = async (id: string) => {
+export const deleteTodo = async (id: Todo["id"]) => {
   const client = createClient();
   const { data, error } = await client.from("todos").delete().eq("id", id);
 
@@ -44,7 +47,7 @@ export const deleteTodo = async (id: string) => {
   return data;
 };
 
-export const toggleTodo = async (id: string, completed: boolean) => {
+export const toggleTodo = async (id: Todo["id"], completed: boolean) => {
   const client = createClient();
   const { data, error } = await client
     .from("todos")

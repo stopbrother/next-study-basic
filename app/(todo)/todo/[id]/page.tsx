@@ -1,6 +1,8 @@
 import { getTodoDetail } from "@/api/todo-api";
 import TodoDetail from "@/components/todos/TodoDetail";
 import { Button } from "@/components/ui/button";
+import { Todo } from "@/types/todo.types";
+import { createClient } from "@/utils/supabase/server";
 import {
   dehydrate,
   HydrationBoundary,
@@ -10,17 +12,18 @@ import Link from "next/link";
 
 interface TodoDetailPageProps {
   params: {
-    id: string;
+    id: Todo["id"];
   };
 }
 
 const TodoDetailPage = async ({ params }: TodoDetailPageProps) => {
   const id = params.id;
   const queryClient = new QueryClient();
+  const serverClient = createClient();
 
   await queryClient.prefetchQuery({
     queryKey: ["todos", id],
-    queryFn: () => getTodoDetail(id),
+    queryFn: () => getTodoDetail(serverClient, id),
   });
 
   return (
